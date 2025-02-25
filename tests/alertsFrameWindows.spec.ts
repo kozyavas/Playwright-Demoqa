@@ -23,9 +23,25 @@ test.describe("Alerts, Frame & Windows Functionality", () => {
             await alertsFrameWindowsPage.newWindowMsgFunctionality();
         })
 
-        test('Alerts', async({ page }) => {
+        test('Alerts', async ({ page }) => {
             const alertsFrameWindowsPage = new AlertsFrameWindowsPage(page);
             await alertsFrameWindowsPage.alertsFunctionality();
         })
+
+        test('Iframes', async ({ page }) => {
+            const alertsFrameWindowsPage = new AlertsFrameWindowsPage(page);
+            await alertsFrameWindowsPage.iframesFunctionality();
+        });
+
+        test('Nested Frames', async ({ page }) => {
+            const alertsFrameWindowsPage = new AlertsFrameWindowsPage(page);
+            await alertsFrameWindowsPage.nestedFramesFunctionality();
+        });
+
+        test('Modal Dialogs', async ({ page })=>{
+            const alertsFrameWindowsPage = new AlertsFrameWindowsPage(page);
+            await alertsFrameWindowsPage.modalDialogsFunction();
+        })
+    
     });
 });

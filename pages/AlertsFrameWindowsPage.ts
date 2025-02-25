@@ -1,4 +1,4 @@
-import { Locator, Page, expect } from "@playwright/test";
+import { FrameLocator, Locator, Page, expect } from "@playwright/test";
 import { HelperBase } from "../helperBase";
 import { Homepage } from "./Homepage";
 import { resolve } from "path";
@@ -20,27 +20,62 @@ export class AlertsFrameWindowsPage extends HelperBase {
   promptButton: Locator;
   promptResult: Locator;
 
+  iframeLink: Locator;
+  iframe1: FrameLocator;
+  iframe2: FrameLocator;
+  iframeText1: Locator;
+  iframeText2: Locator;
+
+  nestedFramesLink: Locator;
+  parentFrame: FrameLocator;
+  childFrame: FrameLocator;
+  childFrameText: Locator;
+
+  modalDialogsLink: Locator;
+  smallModalButton: Locator;
+  largeModalButton: Locator;
+  smallModal: Locator;
+  largeModal: Locator;
+  smallModalClose: Locator;
+  largeModalClose: Locator;
+    
+
     constructor(page: Page) {
       super(page);
 
       this.homepage = new Homepage(page);
-      
 
-      this.browserWindowsLink = page.getByText('Browser Windows');
-      this.newTabButton = page.locator('#tabButton');
+      this.browserWindowsLink = page.getByText("Browser Windows");
+      this.newTabButton = page.locator("#tabButton");
       this.newWindowButton = page.locator("#windowButton");
       this.newWindowMsg = page.locator("#messageWindowButton");
-      this.newTabWindowMsg = page.getByText('This is a sample page');
+      this.newTabWindowMsg = page.getByText("This is a sample page");
 
       this.alertsLink = page.getByText("Alerts").last();
-      this.alertButton = page.locator('#alertButton');
-      this.timerAlertButton = page.locator('#timerAlertButton');
-      this.confirmButton = page.locator('#confirmButton');
-      this.confirmResult = page.locator('#confirmResult');
-      this.promptButton = page.locator('#promtButton');
-      this.promptResult = page.locator('#promptResult');
+      this.alertButton = page.locator("#alertButton");
+      this.timerAlertButton = page.locator("#timerAlertButton");
+      this.confirmButton = page.locator("#confirmButton");
+      this.confirmResult = page.locator("#confirmResult");
+      this.promptButton = page.locator("#promtButton");
+      this.promptResult = page.locator("#promptResult");
 
+      this.iframeLink = page.getByText("Frames").first();
+      this.iframe1 = page.frameLocator("#frame1");
+      this.iframe2 = page.frameLocator("#frame2");
+      this.iframeText1 = this.iframe1.locator("#sampleHeading");
+      this.iframeText2 = this.iframe2.locator("#sampleHeading");
 
+      this.nestedFramesLink = page.getByText("Nested Frames").first();
+      this.parentFrame = page.frameLocator("#frame1"); //using frame locator to get the parent frame
+      this.childFrame = this.parentFrame.frameLocator("iframe"); // to get the child frame inside the parent frame
+      this.childFrameText = this.childFrame.getByText("Child Iframe");
+
+      // Modal dialogs are not exactly the same as JavaScript alerts. They are more like popups that can be closed. 
+      this.modalDialogsLink = page.getByText("Modal Dialogs").first();
+      this.smallModal = page.locator("#showSmallModal");
+      this.largeModal = page.locator("#showLargeModal");
+      this.smallModalButton = page.locator("#closeSmallModal");
+      this.largeModalButton = page.locator("#closeLargeModal");
     }
 
     async newTabFunctionality() {
@@ -159,5 +194,33 @@ export class AlertsFrameWindowsPage extends HelperBase {
       await dialog.dismiss();
     });
     await this.promptButton.click();    
+  };
+
+  async iframesFunctionality() {
+    await this.homepage.alertFramesWindowsLinkClick();
+    await this.iframeLink.click();
+    await expect(this.iframeText1).toContainText("This is a sample page");
+    await expect(this.iframeText2).toContainText("This is a sample page");
+  }
+
+  async nestedFramesFunctionality() {
+    await this.homepage.alertFramesWindowsLinkClick();
+    await this.nestedFramesLink.click();
+    await expect(this.childFrameText).toContainText("Child Iframe");
+  }
+
+  async modalDialogsFunction() {
+    await this.homepage.alertFramesWindowsLinkClick();
+    await this.modalDialogsLink.click();
+
+    //Small Modal
+    await this.smallModal.click();
+    await this.smallModalButton.click();
+    await expect(this.smallModalButton).not.toBeVisible();
+
+    //Large Modal
+    await this.largeModal.click();
+    await this.largeModalButton.click();
+    await expect(this.largeModalButton).not.toBeVisible();
   }
 }

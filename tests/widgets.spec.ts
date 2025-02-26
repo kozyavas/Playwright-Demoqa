@@ -22,5 +22,11 @@ test.describe("Widgets Functionality", () => {
             const widgetsPage = new WidgetsPage(page);
             await widgetsPage.sliderFunctionality();
         });
+
+        test("Progress Bar Functionality", async ({ page }) => {
+            const widgetsPage = new WidgetsPage(page);
+            await widgetsPage.progressBarFunctionality();
+        });
+
     });
 });

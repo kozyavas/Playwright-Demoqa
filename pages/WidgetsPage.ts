@@ -29,6 +29,11 @@ export class WidgetsPage extends HelperBase {
   slider: Locator;
   sliderValue: Locator;
 
+  progressbarLink: Locator;
+  progressBar: Locator;
+  startButton: Locator;
+  resetButton: Locator;
+
 
   constructor(page: Page) {
     super(page);
@@ -55,8 +60,13 @@ export class WidgetsPage extends HelperBase {
     this.dateTimeTimeSelect = page.locator(".react-datepicker__time-list-item").nth(40);
 
     this.sliderLink = page.getByText("Slider");
-    this.slider = page.locator(".range-slider.range-slider--primary[value='55']");
-    this.sliderValue = page.locator("#sliderValue[value='55']");
+    this.slider = page.locator("input[type='range']");
+    this.sliderValue = page.locator("#sliderValue[value='50']");
+
+    this.progressbarLink = page.getByText("Progress Bar");
+    this.progressBar = page.locator(".progress-bar.bg-success");
+    this.startButton = page.locator("#startStopButton");
+    this.resetButton = page.locator("#resetButton");
 }
 
     async autoCompleteFunctionality() {
@@ -106,7 +116,20 @@ export class WidgetsPage extends HelperBase {
   async sliderFunctionality() {
     await this.homepage.widgetsLinkClick();
     await this.sliderLink.click();
-    await this.slider.click();
-    
+    await this.page.waitForTimeout(1000);
+    const sliderMove = this.slider;
+    await sliderMove.dragTo(this.slider), { force: true };
+    await this.page.waitForTimeout(1000);
+    const sliderValue = await this.sliderValue.inputValue(); //.inputValue() directly fetches the current value of the input.
+    expect(sliderValue).toBe("50");
+  }
+
+  async progressBarFunctionality() {
+    await this.homepage.widgetsLinkClick();
+    await this.progressbarLink.click();
+    await this.startButton.click();
+    await this.page.waitForTimeout(11000);
+    await expect(this.progressBar).toHaveAttribute("aria-valuenow", "100");
+    await this.resetButton.click();    
   }
 }

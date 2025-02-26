@@ -38,6 +38,9 @@ export class AlertsFrameWindowsPage extends HelperBase {
   largeModal: Locator;
   smallModalClose: Locator;
   largeModalClose: Locator;
+
+  
+  
     
 
     constructor(page: Page) {
@@ -76,6 +79,9 @@ export class AlertsFrameWindowsPage extends HelperBase {
       this.largeModal = page.locator("#showLargeModal");
       this.smallModalButton = page.locator("#closeSmallModal");
       this.largeModalButton = page.locator("#closeLargeModal");
+
+      
+      
     }
 
     async newTabFunctionality() {
@@ -223,4 +229,6 @@ export class AlertsFrameWindowsPage extends HelperBase {
     await this.largeModalButton.click();
     await expect(this.largeModalButton).not.toBeVisible();
   }
+
+  
 }

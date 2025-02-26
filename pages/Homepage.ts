@@ -16,6 +16,7 @@ export class Homepage extends HelperBase {
         this.elementsLink = page.getByText("Elements");
         this.formsLink = page.getByText("Forms");
         this.alertsFrameWindowsLink = page.getByText("Alerts, Frame & Windows");
+        this.widgetsLink = page.getByText("Widgets");
     }
 
     async elementsLinkClick() {
@@ -28,5 +29,9 @@ export class Homepage extends HelperBase {
 
     async alertFramesWindowsLinkClick() {
         await this.alertsFrameWindowsLink.click();
+    }
+
+    async widgetsLinkClick() {
+        await this.widgetsLink.click();
     }
 }

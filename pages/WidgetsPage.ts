@@ -84,6 +84,7 @@ export class WidgetsPage extends HelperBase {
       await this.multipleColorWindow.first().press("e");
       await this.multipleColorWindow.first().press("Enter");
         
+      //close all the colors by clicking on the close button. instead of for loop, we can use while loop to close all the colors because the number of colors is not fixed.
         while ((await this.closeColors.count()) > 0) {
           await this.closeColors.first().click();
         }
@@ -98,10 +99,10 @@ export class WidgetsPage extends HelperBase {
   
   async datePickerFunctionality() {
     await this.homepage.widgetsLinkClick();
-    await this.datepickerLink.click();
+    await this.datepickerLink.click();//
     await this.selectDateBox.click();
-    await this.selectDateMonthSelectDropdown.selectOption({ index: 1 });
-    await this.selectDateYearSelectDropdown.selectOption({ index: 127 });
+    await this.selectDateMonthSelectDropdown.selectOption({ index: 1 });//.selectOption() selects the option from the dropdown based on the index.
+    await this.selectDateYearSelectDropdown.selectOption({ index: 127 });// 127 is the index of the year 2029 in the dropdown.
     await this.selectDateDaySelect.click();
 
     await this.dateTimeBox.click();
@@ -118,7 +119,7 @@ export class WidgetsPage extends HelperBase {
     await this.sliderLink.click();
     await this.page.waitForTimeout(1000);
     const sliderMove = this.slider;
-    await sliderMove.dragTo(this.slider), { force: true };
+    await sliderMove.dragTo(this.slider), { force: true };//.dragTo() drags the element to the specified target element.
     await this.page.waitForTimeout(1000);
     const sliderValue = await this.sliderValue.inputValue(); //.inputValue() directly fetches the current value of the input.
     expect(sliderValue).toBe("50");
@@ -129,7 +130,7 @@ export class WidgetsPage extends HelperBase {
     await this.progressbarLink.click();
     await this.startButton.click();
     await this.page.waitForTimeout(11000);
-    await expect(this.progressBar).toHaveAttribute("aria-valuenow", "100");
+    await expect(this.progressBar).toHaveAttribute("aria-valuenow", "100");//.toHaveAttribute() checks if the element has the specified attribute with the specified value.
     await this.resetButton.click();    
   }
 }

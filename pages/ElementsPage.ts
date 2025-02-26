@@ -293,5 +293,7 @@ export class ElementsPage extends HelperBase {
     await expect(this.colorChangeButton).toBeEnabled();
     await expect(this.visibleAfterButton).toBeVisible();
   }
+
+  
   
 }

@@ -28,5 +28,15 @@ test.describe("Widgets Functionality", () => {
             await widgetsPage.progressBarFunctionality();
         });
 
+        test("Tool Tips Functionality", async ({ page }) => {
+            const widgetsPage = new WidgetsPage(page);
+            await widgetsPage.toolTipsFunctionality();
+        });
+
+        test("Menu Functionality", async ({ page }) => {
+            const widgetsPage = new WidgetsPage(page);
+            await widgetsPage.menuFunctionality();
+        });
+        });
+
     });
-});

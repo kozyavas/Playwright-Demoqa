@@ -34,6 +34,20 @@ export class WidgetsPage extends HelperBase {
   startButton: Locator;
   resetButton: Locator;
 
+  toolTipsLink: Locator;
+  toolTipsButton: Locator;
+  toolTipsBox: Locator;
+  toolTipsText: Locator;
+  toolTipsNumber: Locator;
+
+  menuLink: Locator;
+  mainItem2: Locator;
+  subItem1: Locator;
+  subItem2: Locator;
+  subSubList: Locator;
+  subSubItem1: Locator;
+  subSubItem2: Locator;
+
 
   constructor(page: Page) {
     super(page);
@@ -67,6 +81,22 @@ export class WidgetsPage extends HelperBase {
     this.progressBar = page.locator(".progress-bar.bg-success");
     this.startButton = page.locator("#startStopButton");
     this.resetButton = page.locator("#resetButton");
+
+    this.toolTipsLink = page.getByText("Tool Tips");
+    this.toolTipsButton = page.locator("#toolTipButton");
+    this.toolTipsBox = page.locator("#toolTipTextField");
+    this.toolTipsText = page.locator("a", { hasText: 'Contrary' });
+    this.toolTipsNumber = page.locator("a", { hasText: '1.10.32' });
+
+    this.menuLink = page.getByText("Menu");
+    this.mainItem2 = page.locator("li", { hasText: 'Main Item 2' });
+    this.subItem1 = page.locator("li", { hasText: 'Sub Item 1' }).first();  
+    this.subItem2 = page.locator("li", { hasText: 'Sub Item 2' }).first();
+    this.subSubList = page.locator("ul", { hasText: "SUB SUB LIST »" }).last();  
+    this.subSubItem1 = page.locator("li", { hasText: 'Sub Sub Item 1' }).first();
+    this.subSubItem2 = page.locator("li", { hasText: 'Sub Sub Item 2' }).first();
+
+
 }
 
     async autoCompleteFunctionality() {
@@ -132,5 +162,31 @@ export class WidgetsPage extends HelperBase {
     await this.page.waitForTimeout(11000);
     await expect(this.progressBar).toHaveAttribute("aria-valuenow", "100");//.toHaveAttribute() checks if the element has the specified attribute with the specified value.
     await this.resetButton.click();    
+  }
+
+  async toolTipsFunctionality() {
+    await this.homepage.widgetsLinkClick();
+    await this.toolTipsLink.click();
+    await this.toolTipsButton.hover();
+    await expect(this.page.locator("button[aria-describedby='buttonToolTip']")).toBeVisible();
+    await this.page.waitForTimeout(1000);
+    await this.toolTipsBox.hover();
+    await expect(this.page.locator("button[aria-describedby='buttonToolTip']")).toBeVisible();
+    await this.page.waitForTimeout(1000);
+    await this.toolTipsText.hover();
+    await expect(this.page.locator("a[aria-describedby='contraryTexToolTip']")).toBeVisible();
+    await this.page.waitForTimeout(1000);
+    await this.toolTipsNumber.hover();
+    await expect(this.page.locator("a[aria-describedby='sectionToolTip']")).toBeVisible();
+  }
+
+  async menuFunctionality() {
+    await this.homepage.widgetsLinkClick();
+    await this.menuLink.first().click();
+    await this.mainItem2.hover();
+    await this.subItem1.hover();
+    await this.subSubList.hover();
+    await this.subSubItem1.hover();
+    await this.subSubItem2.hover();
   }
 }

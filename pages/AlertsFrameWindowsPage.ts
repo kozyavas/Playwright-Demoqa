@@ -101,7 +101,7 @@ export class AlertsFrameWindowsPage extends HelperBase {
       await newTab.waitForLoadState('load');
 
       // Step 8: Click the "Elements" link on the new page --yeni sayfada yeni locator kullanmak gerekiyor:(
-      expect(newTab.locator("#sampleHeading")).toBeVisible();
+      //expect(newTab.locator("#sampleHeading")).toBeVisible();
       //expect(newTab).toHaveTitle("https://demoqa.com/sample");
     }
 

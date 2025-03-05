@@ -45,7 +45,7 @@ test.describe("Alerts, Frame & Windows Functionality", () => {
 
         test('Auto Complete', async ({ page }) => {
             const alertsFrameWindowsPage = new AlertsFrameWindowsPage(page);
-            await alertsFrameWindowsPage.autoCompleteFunctionality();
+            await alertsFrameWindowsPage.alertsFunctionality();
         });
     
     });

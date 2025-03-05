@@ -188,5 +188,6 @@ export class WidgetsPage extends HelperBase {
     await this.subSubList.hover();
     await this.subSubItem1.hover();
     await this.subSubItem2.hover();
+    await this.subSubItem2.hover();
   }
 }
